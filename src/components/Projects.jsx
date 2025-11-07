@@ -1,51 +1,62 @@
-import { Code2, Globe, Smartphone } from 'lucide-react';
+import { ExternalLink, Github, Tag } from 'lucide-react';
 
 const projects = [
   {
-    title: 'Realtime Dashboard',
-    description: 'A metrics-rich dashboard with live updates, dark mode, and keyboard navigation.',
-    icon: Code2,
-    tags: ['React', 'WebSockets', 'Tailwind'],
+    title: 'Immersive 3D Hero',
+    description: 'Interactive Spline scene integrated into a responsive React hero with smooth overlays.',
+    tags: ['React', 'Spline', 'Tailwind'],
+    live: '#',
+    repo: '#',
   },
   {
-    title: '3D Product Showcase',
-    description: 'Interactive Spline-powered experience embedded within a storefront.',
-    icon: Globe,
-    tags: ['Spline', 'Three.js', 'Vite'],
+    title: 'FastAPI + Mongo Starter',
+    description: 'Production-ready template with auth-ready patterns and clean structure.',
+    tags: ['FastAPI', 'MongoDB', 'Pydantic'],
+    live: '#',
+    repo: '#',
   },
   {
-    title: 'Mobile Design System',
-    description: 'Reusable components, tokens, and motion guidelines for a fintech app.',
-    icon: Smartphone,
-    tags: ['Figma', 'Design', 'Accessibility'],
+    title: 'UI Motion Kit',
+    description: 'Collection of polished UI micro-interactions with Framer Motion.',
+    tags: ['Framer Motion', 'Design', 'Accessibility'],
+    live: '#',
+    repo: '#',
   },
 ];
 
 export default function Projects() {
   return (
-    <section id="work" className="relative py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight">Selected Work</h2>
-          <p className="mt-3 text-gray-600">A snapshot of projects that balance usability, performance, and delight.</p>
+    <section id="projects" className="py-20">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="flex items-end justify-between gap-4 mb-8">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Featured Projects</h2>
+            <p className="mt-2 text-slate-600">A few things I’ve been building recently.</p>
+          </div>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map(({ title, description, icon: Icon, tags }) => (
-            <article key={title} className="group rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow bg-white">
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-gray-900 text-white">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <h3 className="font-semibold text-lg">{title}</h3>
+        <div className="grid md:grid-cols-3 gap-6">
+          {projects.map((p) => (
+            <article key={p.title} className="group rounded-2xl border border-black/5 bg-white shadow-sm hover:shadow-md transition overflow-hidden">
+              <div className="p-5">
+                <h3 className="text-lg font-semibold text-slate-900">{p.title}</h3>
+                <p className="mt-2 text-slate-600 text-sm leading-relaxed">{p.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {p.tags.map((t) => (
+                    <span key={t} className="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 text-xs">
+                      <Tag size={12} /> {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <p className="mt-4 text-gray-600">{description}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {tags.map((t) => (
-                  <span key={t} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">{t}</span>
-                ))}
+              <div className="px-5 pb-5 flex items-center gap-3">
+                <a href={p.live} className="inline-flex items-center gap-1 text-indigo-600 hover:text-indigo-700 text-sm font-medium">
+                  <ExternalLink size={14} /> Live
+                </a>
+                <a href={p.repo} className="inline-flex items-center gap-1 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                  <Github size={14} /> Code
+                </a>
               </div>
-              <button className="mt-6 text-sm font-medium text-gray-900 group-hover:underline">View details →</button>
             </article>
           ))}
         </div>

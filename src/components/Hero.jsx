@@ -1,52 +1,81 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Spline from '@splinetool/react-spline';
 
 export default function Hero() {
-  const fullText = 'Developer • Innovator • Creator of Code Constellation';
-  const [typed, setTyped] = useState('');
+  const words = [
+    'Full-Stack Developer',
+    'Tech Enthusiast',
+    '3D + Web',
+    'Gamer at Heart',
+  ];
+  const [index, setIndex] = useState(0);
+  const [display, setDisplay] = useState('');
+  const [deleting, setDeleting] = useState(false);
+  const speedRef = useRef(90);
 
   useEffect(() => {
-    let i = 0;
-    const id = setInterval(() => {
-      setTyped(fullText.slice(0, i + 1));
-      i++;
-      if (i >= fullText.length) clearInterval(id);
-    }, 25);
-    return () => clearInterval(id);
-  }, []);
+    const current = words[index % words.length];
+
+    const tick = () => {
+      if (!deleting) {
+        setDisplay(current.slice(0, display.length + 1));
+        if (display.length + 1 === current.length) {
+          setDeleting(true);
+          speedRef.current = 1200; // pause at full word
+        } else {
+          speedRef.current = 90;
+        }
+      } else {
+        setDisplay(current.slice(0, display.length - 1));
+        if (display.length === 0) {
+          setDeleting(false);
+          setIndex((i) => (i + 1) % words.length);
+          speedRef.current = 200;
+        } else {
+          speedRef.current = 40;
+        }
+      }
+    };
+
+    const t = setTimeout(tick, speedRef.current);
+    return () => clearTimeout(t);
+  }, [display, deleting, index, words]);
 
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden" id="home">
+    <section id="home" className="relative min-h-[92vh] pt-24">
       <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/EF7JOSsHLk16Tlw9/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        <Spline
+          scene="https://prod.spline.design/fcD-iW8YZHyBp1qq/scene.splinecode"
+          style={{ width: '100%', height: '100%' }}
+        />
       </div>
 
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-white/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-white/40 to-white/80" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-        <div className="max-w-3xl">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full shadow-sm ring-1 ring-indigo-100">
-            <span className="inline-block h-2 w-2 rounded-full bg-indigo-500 animate-pulse" />
-            Interactive 3D • Portfolio
-          </span>
-          <h1 className="mt-6 text-5xl sm:text-6xl font-extrabold leading-tight text-gray-900">
-            Hi, I’m Sanjai <span aria-hidden>👋</span>
-          </h1>
-          <p className="mt-4 text-lg font-medium text-gray-800 min-h-[1.75rem]">
-            {typed}
-            <span className="inline-block w-3 h-5 align-middle bg-gray-900 ml-1 animate-pulse" style={{ maskImage: 'linear-gradient(#000,#000)' }} />
-          </p>
-          <p className="mt-4 text-lg text-gray-600">
-            I’m a young developer passionate about AI, web development, and space-based technology. I love creating immersive interfaces and intelligent systems that feel magical yet practical.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#work" className="inline-flex items-center justify-center rounded-md bg-gray-900 text-white px-5 py-3 font-medium shadow hover:bg-gray-800 transition">
-              View My Work
-            </a>
-            <a href="#contact" className="inline-flex items-center justify-center rounded-md bg-white text-gray-900 px-5 py-3 font-medium shadow border border-gray-200 hover:bg-gray-50 transition">
-              Contact Me
-            </a>
+      <div className="relative mx-auto max-w-6xl px-4">
+        <div className="grid md:grid-cols-2 gap-8 items-center min-h-[70vh]">
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900">
+              Hi, I’m Sanjai <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">K</span>
+            </h1>
+            <p className="text-lg md:text-2xl text-slate-700">
+              <span className="font-semibold text-slate-900">{display}</span>
+              <span className="ml-1 inline-block w-1.5 h-6 align-middle bg-slate-900 animate-pulse" />
+            </p>
+            <p className="text-slate-700 max-w-prose">
+              I craft interactive web experiences with modern tech, blending clean UI with playful 3D moments. Always exploring new ideas in code, design, and gaming.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="#projects" className="inline-flex items-center rounded-md bg-slate-900 text-white px-5 py-2.5 font-medium hover:bg-slate-800 transition">
+                View Projects
+              </a>
+              <a href="#about" className="inline-flex items-center rounded-md border border-slate-300 px-5 py-2.5 font-medium text-slate-800 hover:bg-slate-50 transition">
+                About & Skills
+              </a>
+            </div>
           </div>
+
+          <div className="hidden md:block" />
         </div>
       </div>
     </section>

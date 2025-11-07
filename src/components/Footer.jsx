@@ -1,9 +1,11 @@
 export default function Footer() {
   return (
-    <footer className="py-10 bg-white border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-600">
-        <p>© {new Date().getFullYear()} Your Name. All rights reserved.</p>
-        <p className="opacity-80">Built with React, Tailwind & Spline.</p>
+    <footer className="py-10 border-t border-black/5 bg-white/70">
+      <div className="mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="text-sm text-slate-600">© {new Date().getFullYear()} Sanjai K — All rights reserved.</p>
+        <div className="text-sm text-slate-600">
+          Built with React, Tailwind & Spline.
+        </div>
       </div>
     </footer>
   );
